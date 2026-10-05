@@ -34,5 +34,11 @@ def login():
     return "Login gagal"
 
 
+@app.route("/health")
+def health():
+    """Menampilkan status aplikasi."""
+    return "Aplikasi berjalan dengan baik."
+
+
 if __name__ == "__main__":
     app.run(port=5000)
