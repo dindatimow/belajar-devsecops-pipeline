@@ -1,28 +1,29 @@
-from flask import Flask, request
+"""Modul backend autentikasi Flask."""
+
 import sqlite3
+
+from flask import Flask, request
 
 app = Flask(__name__)
 
 
 def get_db_connection():
-    conn = sqlite3.connect("users.db")
-    return conn
+    """Membuka koneksi ke database."""
+    return sqlite3.connect("users.db")
 
 
 @app.route("/login", methods=["GET"])
 def login():
-    username = request.args.get("username")
-    password = request.args.get("password")
+    """Memproses autentikasi pengguna."""
+    username = request.args.get("username", "")
+    password = request.args.get("password", "")
 
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    query = "SELECT * FROM users WHERE username = '%s' AND password = '%s'" % (
-        username,
-        password,
-    )
+    query = "SELECT * FROM users WHERE username = ? AND password = ?"
 
-    cursor.execute(query)
+    cursor.execute(query, (username, password))
     user = cursor.fetchone()
 
     conn.close()
@@ -34,4 +35,4 @@ def login():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(port=5000)
