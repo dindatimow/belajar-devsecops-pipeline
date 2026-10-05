@@ -1,5 +1,6 @@
 """Modul backend autentikasi Flask."""
 
+import os
 import sqlite3
 
 from flask import Flask, request
@@ -41,4 +42,4 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(host=os.getenv("FLASK_HOST", "127.0.0.1"), port=5000)

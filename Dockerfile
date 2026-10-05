@@ -14,6 +14,8 @@ RUN chown -R appuser:appuser /app
 
 USER appuser
 
+ENV FLASK_HOST=0.0.0.0
+
 EXPOSE 5000
 
 CMD ["python", "app.py"]
